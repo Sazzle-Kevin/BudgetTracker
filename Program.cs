@@ -1,5 +1,11 @@
-﻿using BudgetTracker.UI;
-var ui = new Interface();
+﻿
+using BudgetTracker.Services;
+using BudgetTracker.UI;
+
+var storageService = new StorageService("data");
+var transactionService = new TransactionService(storageService);
+var loggerService = new LoggerService(transactionService);
+var ui = new Interface(transactionService);
 
 while (true)
 {
@@ -9,22 +15,22 @@ while (true)
     {
         case "1":
             ui.AddTransaction();
-            continue;
+            break;
 
         case "2":
             ui.RemoveTransaction();
-            continue;
+            break;
 
         case "3":
             ui.ShowReport();
-            continue;
+            break;
 
         case "4":
             Console.WriteLine("May the Budget be with you. 🪙");
             return;
 
         default:
-            Console.WriteLine(">>> Error: Please enter the number of your option <<<");
-            continue;
+            Console.WriteLine("Invalid option. Please try again.");
+            break;
     }
 }
